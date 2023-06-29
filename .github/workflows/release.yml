@@ -1,12 +1,6 @@
 name: Release
 
 on:
-  workflow_dispatch:
-    inputs:
-      ref:
-        description: "Why trigger?"
-        required: true
-        type: string
   push:
     branches-ignore:
       - '**'
@@ -21,16 +15,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@master
 
-      - name: Set up Go
-        uses: actions/setup-go@master
-        with:
-          go-version: 1.16.x
-
       - name: Install Helm
         uses: azure/setup-helm@v1
         with:
           version: v3.8.1
 
+      - name: Prepare
+        id: prepare
+        run: |
+          echo "tag_name=${GITHUB_REF#refs/tags/}" >> "$GITHUB_OUTPUT"
+          echo "$tag_name"
+
       - name: Helm package
         run: |
           helm package  charts/openIM
+
+  call_ci_workflow:
+    uses: ./.github/workflows/pages.yml

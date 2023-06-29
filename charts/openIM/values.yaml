@@ -599,3 +599,6 @@ istio:
     domain: ""
   gateway:
     domain: ""
+
+metrics:
+  enabled: false
