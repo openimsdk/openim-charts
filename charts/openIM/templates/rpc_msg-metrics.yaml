@@ -1,0 +1,19 @@
+{{if .Values.metrics.enabled}}
+# Prometheus Monitor Service (Metrics)
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{include "openIM.rpc_msg" . }}-{{ include "openIM.fullname" . }}
+  labels:
+    {{- include "openIM.labels" . | nindent 4 }}
+    app: {{include "openIM.rpc_msg" . }}
+spec:
+  endpoints:
+    - path: /metrics
+      port: metrics
+      scheme: http
+  selector:
+    matchLabels:
+      {{- include "openIM.labels" . | nindent 4 }}
+      app: {{include "openIM.rpc_msg" . }}
+{{- end}}
