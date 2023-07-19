@@ -33,7 +33,7 @@ jobs:
       - name: Helm package
         run: |
           latest_release=${{ steps.prepare.outputs.tag_name }}
-          if [[ ${latest_release#v} == "3.0.0-alpha1" ]]; then
+          if [[ ${latest_release#v} == "3.0.0-beta1" ]]; then
             sed -i "s#default#errcode#g" charts/openIM/Chart.yaml
           else
             sed -i "s#0.0.0#${latest_release#v}#g" charts/openIM/Chart.yaml
