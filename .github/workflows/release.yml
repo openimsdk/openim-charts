@@ -33,6 +33,7 @@ jobs:
           latest_release=${{ steps.prepare.outputs.tag_name }}
           if [[ ${latest_release#v} == "3.0.0-beta.0" ]]; then
             sed -i "s#default#errcode#g" charts/openIM/Chart.yaml
+            sed -i "s#0.0.0#3.0.0-beta.0#g" charts/openIM/Chart.yaml
           else
             sed -i "s#0.0.0#${latest_release#v}#g" charts/openIM/Chart.yaml
             sed -i "s#default#${latest_release#v}#g" charts/openIM/Chart.yaml
