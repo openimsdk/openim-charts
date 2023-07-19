@@ -40,7 +40,6 @@ jobs:
             sed -i "s#default#${latest_release#v}#g" charts/openIM/Chart.yaml
           fi
           helm package charts/openIM
-          git checkout .
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v1

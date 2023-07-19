@@ -1,7 +1,7 @@
 release:
   prerelease: auto
   extra_files:
-    - glob: ./openIM*.tgz
+    - glob: ./openim*.tgz
 checksum:
   name_template: '{{ .ProjectName }}_checksums.txt'
 snapshot:
