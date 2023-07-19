@@ -16,6 +16,7 @@ if [[ -z "$version" ]]; then
   helm repo index . --url https://github.com/$repository/releases/download/$version
   exit 0
 fi
+cp -rf openIM ./charts/
 sed -i "s#default#latest#g" charts/openIM/Chart.yaml
 helm package charts/openIM
 helm repo index . --url https://github.com/$repository
