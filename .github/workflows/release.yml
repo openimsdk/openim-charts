@@ -30,5 +30,25 @@ jobs:
         run: |
           helm package  charts/openIM
 
+      - name: Helm package
+        run: |
+          latest_release=${{ steps.prepare.outputs.tag_name }}
+          if [[ ${latest_release#v} == "3.0.0-alpha1" ]]; then
+            sed -i "s#default#errcode#g" charts/openIM/Chart.yaml
+          else
+            sed -i "s#0.0.0#${latest_release#v}#g" charts/openIM/Chart.yaml
+            sed -i "s#default#${latest_release#v}#g" charts/openIM/Chart.yaml
+          fi
+          helm package charts/openIM
+          git checkout .
+
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v1
+        with:
+          version: latest
+          args: release --rm-dist --timeout=1h
+        env:
+          VERSION: ${{ steps.prepare.outputs.tag_name }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   call_ci_workflow:
     uses: ./.github/workflows/pages.yml
