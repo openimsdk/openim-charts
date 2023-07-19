@@ -1,3 +1,5 @@
+builds:
+  - skip: true
 release:
   prerelease: auto
   extra_files:
