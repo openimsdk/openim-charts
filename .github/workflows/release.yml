@@ -28,10 +28,7 @@ jobs:
 
       - name: Helm package
         run: |
-          helm package  charts/openIM
-
-      - name: Helm package
-        run: |
+          cp -rf openIM ./charts/
           latest_release=${{ steps.prepare.outputs.tag_name }}
           if [[ ${latest_release#v} == "3.0.0-beta.0" ]]; then
             sed -i "s#default#errcode#g" charts/openIM/Chart.yaml
